@@ -17,7 +17,9 @@ namespace ConsoleUIDecorators
 
         public void Delete(TEntity entity)
         {
-            
+            Console.WriteLine("Are you sure you want to delete the entity? [y/N]");
+	        var keyInfo = Console.ReadKey();
+			if (keyInfo.Key == ConsoleKey.Y)
             {
                 decoratedCrud.Delete(entity);
             }
