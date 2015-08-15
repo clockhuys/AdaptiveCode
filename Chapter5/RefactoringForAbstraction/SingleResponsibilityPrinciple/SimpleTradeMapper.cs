@@ -3,7 +3,9 @@ using SingleResponsibilityPrinciple.Contracts;
 
 namespace SingleResponsibilityPrinciple
 {
-    public class SimpleTradeMapper : ITradeMapper
+	using System.Collections.Generic;
+
+	public class SimpleTradeMapper : ITradeMapper
     {
         public TradeRecord Map(string[] fields)
         {
@@ -26,6 +28,24 @@ namespace SingleResponsibilityPrinciple
         private static float LotSize = 100000f;
     }
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 	public class LoggingTradeMapper : ITradeMapper
 	{
 		private readonly ITradeMapper _tradeMapper;
@@ -47,6 +67,77 @@ namespace SingleResponsibilityPrinciple
 				_logger.LogInfo(field);				
 			}
 			return _tradeMapper.Map(fields);
+		}
+	}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	public interface IComponent
+	{
+		void Something();
+	}
+
+	public class Leaf : IComponent
+	{
+		public void Something()
+		{
+			// doe iets.
+		}
+	}
+
+	public class CompositeComponent : IComponent
+	{
+		private readonly IList<IComponent> _components;
+
+		public CompositeComponent()
+		{
+			_components = new List<IComponent>();
+		}
+
+		public void AddComponent(IComponent component)
+		{
+			_components.Add(component);
+		}
+
+		public void RemoveComponent(IComponent component)
+		{
+			_components.Remove(component);
+		}
+
+		public void Something()
+		{
+			foreach (var component in _components)
+			{
+				component.Something();
+			}
 		}
 	}
 }
